@@ -28,7 +28,7 @@ describe "Static pages" do
     end
     
     it "should have the title 'Help'" do
-      visit 'help_path'
+      visit help_path
       page.should have_selector('title', 
                 :text => "Ruby on Rails Tutorial Sample App | Help")
       end
