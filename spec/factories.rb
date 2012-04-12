@@ -9,4 +9,10 @@ FactoryGirl.define do
       admin true
     end
   end
+  
+  factory :micropost do
+    content "Lorem Ipsum"
+    user #allows passing in a user parameter
+  end
+  
 end

@@ -19,6 +19,8 @@ describe "Authentication" do
 
       it { should have_selector('title', text: 'Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Settings') }
 
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -107,6 +109,16 @@ describe "Authentication" do
 
             it { should_not have_selector('title', text: 'Edit user') }
           end
+          
+#          describe "and then attempting to use the #new action" do
+#            before { visit new_user_path }
+#            specify { response.should redirect_to(root_path) }
+#          end
+          
+ #         describe "and then attempting to use the #create action" do
+#            before { post user_path }
+#            it { should redirect_to(root_path) }
+#          end
 
 
         end
@@ -142,5 +154,23 @@ describe "Authentication" do
         specify { response.should redirect_to(root_path) }
       end
     end
+    
+    describe "in the microposts controller" do 
+    
+      describe "submitting to the create action" do 
+        before { post microposts_path }
+        specify { response.should redirect_to(signin_path) }
+      end
+      
+      describe "submitting to the destroy action" do
+        before do
+          micropost = FactoryGirl.create(:micropost)
+          delete micropost_path(micropost)
+        end
+          specify { response.should redirect_to(signin_path) }
+      end
+    end
+    
+  
   end
 end
